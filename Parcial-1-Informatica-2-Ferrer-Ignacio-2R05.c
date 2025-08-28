@@ -184,7 +184,7 @@ void guardarLibros(struct lista_libros *libro, int cant_libros, int bandera){
 	FILE *archivo;
 	
 	archivo = fopen("libros.txt","w");												//Guardo los libros en un archivo de texto llamado libros.txt
-	if(archivo != NULL)
+	if(archivo != NULL)																//Compruebo que el archivo se haya creado/abierto correctamente
 	{
 		for(i=0;i<cant_libros;i++)
 		{
