@@ -1,27 +1,33 @@
 #include <stdio.h>
 #include <string.h>
+
 struct lista_libros{
 	char titulo[100];
 	char autor[50];
-	int anoPublicacion;
+	int anioPublicacion;
 };
 
 struct lista_libros libro[100];
 
 void cargarLibros(struct lista_libros *libro,int cant_libros,int *bandera);
+//función para cargar libros uno a uno
 void mostrarLibros(struct lista_libros *libro, int cant_libros, int bandera);
+//Función que muestra la lista de todos los libros cargados
 void guardarLibros(struct lista_libros *libro, int cant_libros, int bandera);
+//Función para cargar la lista de libros en un archivo de texto
 void buscarLibro(struct lista_libros *libro, int cant_libros, int bandera);
+//Función para buscar un libro dentro de la lista cargada
 
 
 int main(int argc, char *argv[]) {
 	struct lista_libros libro;
 	int opcion,bandera = 0, cant_libros;
+	
 	do{
 		printf("\t--Menú--\n");
 		printf("Ingrese la opción que desea realizar\n");
 		printf("1: Cargar nuevos libros\n");
-		printf("2: Mostrar todos los libros cargados\n");
+		printf("2: Mostrar todos los libros cargados\n");				//Menú de opciones del programa
 		printf("3: Buscar libros desde 'busqueda.txt'\n");
 		printf("4: Guardar libros en 'libros.txt'\n");
 		printf("Presione 0 para salir del programa\n");
@@ -30,7 +36,7 @@ int main(int argc, char *argv[]) {
 			case 1:
 				printf("Cuántos libros desea ingresar?\n");
 				scanf("%d",&cant_libros);
-				getchar();
+				getchar();												//El getchar() limpia el búfer después del scanf
 				cargarLibros(&libro, cant_libros, &bandera);
 			break;
 		
@@ -41,7 +47,7 @@ int main(int argc, char *argv[]) {
 				}
 				else
 				{
-					printf("Primero debe ingresar libros. Seleccione la opción 1\n");
+					printf("Primero debe ingresar libros. Seleccione la opción 1\n");				//Si la bandera es 0, aún no se ha creado la lista de libros, por lo que no se puede imprimir nada
 				}
 			break;
 				
@@ -52,7 +58,7 @@ int main(int argc, char *argv[]) {
 				}
 				else
 				{
-					printf("Primero debe ingresar libros. Seleccione la opción 1\n");
+					printf("Primero debe ingresar libros. Seleccione la opción 1\n");			//Si la bandera es 0, no se puede buscar nada, porque no se han ingresado libros
 				}
 			break;
 			
@@ -73,17 +79,17 @@ int main(int argc, char *argv[]) {
 
 void cargarLibros(struct lista_libros *libro, int cant_libros, int *bandera){
 	int i;
-
+	
 	for(i=0;i<cant_libros;i++){
 		printf("\nLIBRO NUMERO %d\n",i+1);
 		printf("Ingrese el título\n");
-		scanf("%s",libro[i].titulo);
+		scanf("%s",libro[i].titulo);						//Bucle que guarda los libros uno a uno en un arreglo de estructuras
 		printf("Ingrese el autor\n");
 		scanf("%s",libro[i].autor);
 		printf("Ingrese el año de publicación\n");
-		scanf("%d",&libro[i].anoPublicacion);
+		scanf("%d",&libro[i].anioPublicacion);
 	}
-	*bandera = 1;
+	*bandera = 1;											//Actualizo la bandera para saber que ya tengo ingresada una lista de libros
 }
 
 void mostrarLibros(struct lista_libros *libro, int cant_libros, int bandera){
@@ -91,9 +97,9 @@ void mostrarLibros(struct lista_libros *libro, int cant_libros, int bandera){
 	
 	for(i=0;i<cant_libros;i++){
 		printf("\nLIBRO NUMERO %d\n",i+1);
-		printf("Título: %s\n",libro[i].titulo);
+		printf("Título: %s\n",libro[i].titulo);							//Muestro uno por uno los libros de la lista
 		printf("Autor: %s\n",libro[i].autor);
-		printf("Año de publicación: %d\n",libro[i].anoPublicacion);
+		printf("Año de publicación: %d\n",libro[i].anioPublicacion);
 	}
 }
 
@@ -103,7 +109,7 @@ void buscarLibro(struct lista_libros *libro, int cant_libros, int bandera){
 	
 	printf("Ingrese por qué parámetro desea buscar\n");
 	printf("1: Buscar por título\n");
-	printf("2: Buscar por autor\n");
+	printf("2: Buscar por autor\n");							//Menú para buscar libros por un parámetro elegido por el usuario
 	printf("3: Buscar por año de publicación\n");
 	scanf("%d", &opcion);
 	
@@ -116,11 +122,11 @@ void buscarLibro(struct lista_libros *libro, int cant_libros, int bandera){
 			{
 				if(strstr(libro[i].titulo, titulo_buscado) != NULL)
 				{
-					printf("\nLIBRO NUMERO %d\n",i+1);
+					printf("\nLIBRO NUMERO %d\n",i+1);								//Si encuentro una coincidencia la imprimo
 					printf("Título: %s\n",libro[i].titulo);
 					printf("Autor: %s\n",libro[i].autor);
-					printf("Año de publicación: %d\n",libro[i].anoPublicacion);
-					coincidencias++;
+					printf("Año de publicación: %d\n",libro[i].anioPublicacion);
+					coincidencias++;												//Actualizo las coincidencias a un numero distinto de 0
 				}
 			}
 			if(coincidencias == 0)
@@ -138,10 +144,10 @@ void buscarLibro(struct lista_libros *libro, int cant_libros, int bandera){
 				if(strstr(libro[i].autor, autor_buscado) != NULL)
 				{
 					printf("\nLIBRO NUMERO %d\n",i+1);
-					printf("Título: %s\n",libro[i].titulo);
+					printf("Título: %s\n",libro[i].titulo);								//Si encuentro una coincidencia la imprimo
 					printf("Autor: %s\n",libro[i].autor);
-					printf("Año de publicación: %d\n",libro[i].anoPublicacion);
-					coincidencias++;
+					printf("Año de publicación: %d\n",libro[i].anioPublicacion);
+					coincidencias++;													//Actualizo las coincidencias a un numero distinto de 0
 				}
 			}
 			if(coincidencias == 0)
@@ -156,13 +162,13 @@ void buscarLibro(struct lista_libros *libro, int cant_libros, int bandera){
 			scanf("%d",&anoPublicacion_buscado);
 			for(i=0;i<cant_libros;i++)
 			{
-				if(libro[i].anoPublicacion == anoPublicacion_buscado)
+				if(libro[i].anioPublicacion == anoPublicacion_buscado)
 				{
 					printf("\nLIBRO NUMERO %d\n",i+1);
-					printf("Título: %s\n",libro[i].titulo);
+					printf("Título: %s\n",libro[i].titulo);								//Si encuentro una coincidencia la imprimo
 					printf("Autor: %s\n",libro[i].autor);
-					printf("Año de publicación: %d\n",libro[i].anoPublicacion);
-					coincidencias++;
+					printf("Año de publicación: %d\n",libro[i].anioPublicacion);
+					coincidencias++;													//Actualizo las coincidencias a un numero distinto de 0
 				}
 			}
 			if(coincidencias == 0)
@@ -177,7 +183,7 @@ void guardarLibros(struct lista_libros *libro, int cant_libros, int bandera){
 	int i;
 	FILE *archivo;
 	
-	archivo = fopen("libros.txt","w");
+	archivo = fopen("libros.txt","w");												//Guardo los libros en un archivo de texto llamado libros.txt
 	if(archivo != NULL)
 	{
 		for(i=0;i<cant_libros;i++)
@@ -185,7 +191,7 @@ void guardarLibros(struct lista_libros *libro, int cant_libros, int bandera){
 			fprintf(archivo,"\nLibro %d: \n",i+1);
 			fprintf(archivo,"Título: %s \n",libro[i].titulo);
 			fprintf(archivo,"Autor: %s \n",libro[i].autor);
-			fprintf(archivo,"Año de publicación: %d \n",libro[i].anoPublicacion);
+			fprintf(archivo,"Año de publicación: %d \n",libro[i].anioPublicacion);
 		}
 		printf("Libros guardados correctamente en 'libros.txt'\n");
 		fclose(archivo);
